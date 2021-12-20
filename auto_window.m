@@ -237,7 +237,16 @@ end
 Date = datestr(reshape(val_dat, [length(val_dat), 1]));
 
 data = table(Date, Imsak, Fajr, Sunrise, Dhuha, Dhuhr, Asr, Maghrib, Isha);
-writetable(data, 'Prayer Times.xlsx');
+
+prompt = {'Name your file:'};
+dlgtitle = 'Generate';
+dims = [1 35];
+definput = {'Prayer Times'};
+answer = inputdlg(prompt,dlgtitle,dims,definput);
+
+pt_filename = strcat(answer{1}, '.xlsx');
+
+writetable(data, pt_filename);
 
 
 function but_back_Callback(hObject, eventdata, handles)
