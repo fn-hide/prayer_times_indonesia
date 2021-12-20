@@ -33,11 +33,13 @@ lat_lon_cit = readmatrix('latitude_longitude_city.csv', ...
 cit_array = lat_lon_cit(:, 1);
 lat_array = str2double(lat_lon_cit(:, 2));
 lon_array = str2double(lat_lon_cit(:, 3));
+hei_array = str2double(lat_lon_cit(:, 4));
 
 % store cit, lat, and lon in handles
 handles.cit_array = cit_array;
 handles.lat_array = lat_array;
 handles.lon_array = lon_array;
+handles.hei_array = hei_array;
 
 set(handles.pu_city, 'String', handles.cit_array);
 % Update handles structure
@@ -69,6 +71,7 @@ function pu_city_Callback(hObject, eventdata, handles)
 % indexing: pick long and lat from csv data with given index value
 lon = handles.lon_array(handles.pu_city.Value);
 lat = handles.lat_array(handles.pu_city.Value);
+hei = handles.hei_array(handles.pu_city.Value);
 
 lat_dms = degrees2dms(lat);
 lon_dms = degrees2dms(lon);
@@ -81,7 +84,7 @@ set(handles.lon1, 'String', lon_dms(1));
 set(handles.lon2, 'String', lon_dms(2));
 set(handles.lon3, 'String', lon_dms(3));
 
-set(handles.ent_alt, 'String', 0);
+set(handles.ent_alt, 'String', hei);
 
 
 function pu_city_CreateFcn(hObject, eventdata, handles)

@@ -72,11 +72,13 @@ lat_lon_cit = readmatrix('latitude_longitude_city.csv', ...
 cit_array = lat_lon_cit(:, 1);
 lat_array = str2double(lat_lon_cit(:, 2));
 lon_array = str2double(lat_lon_cit(:, 3));
+hei_array = str2double(lat_lon_cit(:, 4));
 
 % store cit, lat, and lon in handles
 handles.cit_array = cit_array;
 handles.lat_array = lat_array;
 handles.lon_array = lon_array;
+handles.hei_array = hei_array;
 
 set(handles.pu_city, 'String', handles.cit_array);
 
@@ -342,6 +344,7 @@ function pu_city_Callback(hObject, eventdata, handles)
 % get lat and lon index and catch the value
 lat = handles.lat_array(handles.pu_city.Value);
 lon = handles.lon_array(handles.pu_city.Value);
+hei = handles.hei_array(handles.pu_city.Value);
 
 % convert ent_date String to julian date
 jul = juliandate(datetime(get(handles.ent_date, 'String')));
@@ -367,7 +370,7 @@ set(handles.lon1, 'String', lon_dms(1));
 set(handles.lon2, 'String', lon_dms(2));
 set(handles.lon3, 'String', lon_dms(3));
 
-set(handles.ent_alt, 'String', 0);
+set(handles.ent_alt, 'String', hei);
 
 set(handles.ent_eot1, 'String', 0);
 set(handles.ent_eot2, 'String', minEot);
@@ -380,6 +383,7 @@ set(handles.ent_dec3, 'String', dec_dms(3));
 % store lat, lon, eot, and dec Value to handles
 handles.lat_val = lat;
 handles.lon_val = lon;
+handles.alt_val = hei;
 handles.val_eot = eot;
 handles.val_dec = decDeg;
 
