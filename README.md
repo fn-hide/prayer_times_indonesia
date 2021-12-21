@@ -7,4 +7,4 @@ The Mathematics Departement of Islamic State University of Sunan Ampel
 - Machine Learning Toolbox
 - Optimization Toolbox
 
-###### Has been built with MATLAB 2020a
+###### Has been built using MATLAB 2020a
