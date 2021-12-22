@@ -51,10 +51,6 @@ function varargout = auto_window_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-function ent_sta_Callback(hObject, eventdata, handles)
-
-
-
 function ent_sta_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -103,19 +99,11 @@ else
 end
 
 
-function lon3_Callback(hObject, eventdata, handles)
-
-
-
 function lon3_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-
-
-function lat3_Callback(hObject, eventdata, handles)
-
 
 
 function lat3_CreateFcn(hObject, eventdata, handles)
@@ -125,19 +113,11 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-function lon2_Callback(hObject, eventdata, handles)
-
-
-
 function lon2_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-
-
-function lat2_Callback(hObject, eventdata, handles)
-
 
 
 function lat2_CreateFcn(hObject, eventdata, handles)
@@ -147,19 +127,11 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-function lon1_Callback(hObject, eventdata, handles)
-
-
-
 function lon1_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-
-
-function lat1_Callback(hObject, eventdata, handles)
-
 
 
 function lat1_CreateFcn(hObject, eventdata, handles)
@@ -220,23 +192,6 @@ for i = 1:length(val_dat)
     Imsak{i} = strcat(num2str(h(1)), ":", num2str(h(2)), ":", num2str(h(3)));
 end
 
-% disp('shu')
-% disp(Fajr)
-% disp('dzu')
-% disp(Dhuhr)
-% disp('ash')
-% disp(Asr)
-% disp('mag')
-% disp(Maghrib)
-% disp('isy')
-% disp(Isha)
-% disp('dhu')
-% disp(Dhuha)
-% disp('ter')
-% disp(Sunrise)
-% disp('ims')
-% disp(Imsak)
-
 Date = datestr(reshape(val_dat, [length(val_dat), 1]));
 
 data = table(Date, Imsak, Fajr, Sunrise, Dhuha, Dhuhr, Asr, Maghrib, Isha);
@@ -263,20 +218,11 @@ function ent_sta_KeyPressFcn(hObject, eventdata, handles)
 uicalendar('DestinationUI', {handles.ent_sta, 'string'});
 
 
-
-function ent_alt_Callback(hObject, eventdata, handles)
-
-
-
 function ent_alt_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-
-
-function ent_end_Callback(hObject, eventdata, handles)
-
 
 
 function ent_end_CreateFcn(hObject, eventdata, handles)
