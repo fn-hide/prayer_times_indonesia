@@ -1,6 +1,18 @@
 function [shu, dzu, ash, mag, isy, dhu, ter, ims] = prayer_times_calculation(lat, lon, eot, dec, hei)
-%PRAYER_TIMES_CALCULATION Summary of this function goes here
-%   Detailed explanation goes here
+%Calculate all prayer times
+%   lat     : latitude
+%   lon     : longitude
+%   eot     : equation of times
+%   dec     : declination
+%   hei     : altitude or height of selected city
+%   shu     : fajr time
+%   dzu     : dzuhr time
+%   ash     : ashr time
+%   mag     : maghrib time
+%   isy     : isha time
+%   dhu     : dhuha time
+%   ter     : sunrise time
+%   ims     : imsak time
 
 % final variables
 ltc = (105 - lon)/15;
