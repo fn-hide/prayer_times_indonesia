@@ -44,7 +44,6 @@ end
 % End initialization code - DO NOT EDIT
 
 
-% --- Executes just before main_window is made visible.
 function main_window_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.
 % hObject    handle to figure
@@ -58,24 +57,18 @@ handles.output = hObject;
 % Update handles structure
 guidata(hObject, handles);
 
-% UIWAIT makes main_window wait for user response (see UIRESUME)
-% uiwait(handles.figure1);
 
-
-% --- Outputs from this function are returned to the command line.
 function varargout = main_window_OutputFcn(hObject, eventdata, handles) 
 
 varargout{1} = handles.output;
 
 
-% --- Executes on button press in manual.
 function manual_Callback(hObject, eventdata, handles)
 
 close(main_window);
 manual_window;
 
 
-% --- Executes on button press in auto.
 function auto_Callback(hObject, eventdata, handles)
 
 close(main_window);
