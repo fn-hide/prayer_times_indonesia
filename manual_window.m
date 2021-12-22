@@ -53,7 +53,6 @@ end
 % End initialization code - DO NOT EDIT
 
 
-% --- Executes just before manual_window is made visible.
 function manual_window_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.
 % hObject    handle to figure
@@ -85,19 +84,11 @@ set(handles.pu_city, 'String', handles.cit_array);
 % Update handles structure
 guidata(hObject, handles);
 
-% UIWAIT makes manual_window wait for user response (see UIRESUME)
-% uiwait(handles.figure1);
 
-
-% --- Outputs from this function are returned to the command line.
 function varargout = manual_window_OutputFcn(hObject, eventdata, handles) 
-% varargout  cell array for returning output args (see VARARGOUT);
-% hObject    handle to figure
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
-% Get default command line output from handles structure
 varargout{1} = handles.output;
+
 
 function but_cal_Callback(hObject, eventdata, handles)
 % % calculate day of year
@@ -166,15 +157,13 @@ ims = round(ims);
 str_ims= strcat(num2str(ims(1)), ':', num2str(ims(2)), ':', num2str(ims(3)));
 set(handles.edi_ims, 'String', str_ims);
 
-% --- open auto_window.fig and close main_window.fig
+
 function but_back_Callback(hObject, eventdata, handles)
+
 close(manual_window);
 main_window;
 
-function ent_eot_Callback(hObject, eventdata, handles)
 
-
-% --- Executes during object creation, after setting all properties.
 function ent_eot_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -182,10 +171,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-function ent_dec_Callback(hObject, eventdata, handles)
-
-
-% --- Executes during object creation, after setting all properties.
 function ent_dec_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -193,10 +178,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-function lon1_Callback(hObject, eventdata, handles)
-
-
-% --- Executes during object creation, after setting all properties.
 function lon1_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -204,10 +185,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-function entry_latitude_Callback(hObject, eventdata, handles)
-
-
-% --- Executes during object creation, after setting all properties.
 function entry_latitude_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -215,11 +192,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-
-function ent_alt_Callback(hObject, eventdata, handles)
-
-
-% --- Executes during object creation, after setting all properties.
 function ent_alt_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -227,11 +199,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-
-function entry_city_Callback(hObject, eventdata, handles)
-
-
-% --- Executes during object creation, after setting all properties.
 function entry_city_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -239,11 +206,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-
-function ent_date_Callback(hObject, eventdata, handles)
-
-
-% --- Executes during object creation, after setting all properties.
 function ent_date_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -251,22 +213,18 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- pick date when button press
 function but_date_Callback(hObject, eventdata, handles)
+
 uicalendar('DestinationUI', {handles.ent_date, 'String'});
 disp('but_date_callback');
 
 
-% --- pick date when key press
 function ent_date_KeyPressFcn(hObject, eventdata, handles)
+
 uicalendar('DestinationUI', {handles.ent_date, 'string'});
 disp('ent_date_KeyPressFcn');
 
 
-function lon2_Callback(hObject, eventdata, handles)
-
-
-% --- Executes during object creation, after setting all properties.
 function lon2_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -274,11 +232,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-
-function lon3_Callback(hObject, eventdata, handles)
-
-
-% --- Executes during object creation, after setting all properties.
 function lon3_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -286,11 +239,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-
-function lat1_Callback(hObject, eventdata, handles)
-
-
-% --- Executes during object creation, after setting all properties.
 function lat1_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -298,11 +246,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-
-function lat2_Callback(hObject, eventdata, handles)
-
-
-% --- Executes during object creation, after setting all properties.
 function lat2_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -310,11 +253,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-
-function lat3_Callback(hObject, eventdata, handles)
-
-
-% --- Executes during object creation, after setting all properties.
 function lat3_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -322,11 +260,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on selection change in menu_city.
-function menu_city_Callback(hObject, eventdata, handles)
-
-
-% --- Executes during object creation, after setting all properties.
 function menu_city_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -334,7 +267,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on selection change in pu_city.
 function pu_city_Callback(hObject, eventdata, handles)
 % set latitude and longitude entry to chosen city pop-up menu
 % indexing: pick long and lat from csv data with given index value
@@ -391,7 +323,6 @@ handles.val_dec = decDeg;
 guidata(hObject, handles);
 
 
-% --- Executes during object creation, after setting all properties.
 function pu_city_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -399,7 +330,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on button press in cb_city.
 function cb_city_Callback(hObject, eventdata, handles)
 
 if get(hObject, 'Value') == 1
@@ -409,144 +339,43 @@ else
 end
 
 
-% --- If Enable == 'on', executes on mouse press in 5 pixel border.
-% --- Otherwise, executes on mouse press in 5 pixel border or over ent_date.
-function ent_date_ButtonDownFcn(hObject, eventdata, handles)
-
-
-
-function ent_eot3_Callback(hObject, eventdata, handles)
-% hObject    handle to ent_eot3 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of ent_eot3 as text
-%        str2double(get(hObject,'String')) returns contents of ent_eot3 as a double
-
-
-% --- Executes during object creation, after setting all properties.
 function ent_eot3_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to ent_eot3 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
 
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
 
 
-
-function ent_eot2_Callback(hObject, eventdata, handles)
-% hObject    handle to ent_eot2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of ent_eot2 as text
-%        str2double(get(hObject,'String')) returns contents of ent_eot2 as a double
-
-
-% --- Executes during object creation, after setting all properties.
 function ent_eot2_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to ent_eot2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
 
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
 
 
-
-function ent_eot1_Callback(hObject, eventdata, handles)
-% hObject    handle to ent_eot1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of ent_eot1 as text
-%        str2double(get(hObject,'String')) returns contents of ent_eot1 as a double
-
-
-% --- Executes during object creation, after setting all properties.
 function ent_eot1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to ent_eot1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
 
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
 
 
-
-function ent_dec3_Callback(hObject, eventdata, handles)
-% hObject    handle to ent_dec3 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of ent_dec3 as text
-%        str2double(get(hObject,'String')) returns contents of ent_dec3 as a double
-
-
-% --- Executes during object creation, after setting all properties.
 function ent_dec3_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to ent_dec3 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
 
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
 
 
-
-function ent_dec2_Callback(hObject, eventdata, handles)
-% hObject    handle to ent_dec2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of ent_dec2 as text
-%        str2double(get(hObject,'String')) returns contents of ent_dec2 as a double
-
-
-% --- Executes during object creation, after setting all properties.
 function ent_dec2_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to ent_dec2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
 
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
 
 
-
-function ent_dec1_Callback(hObject, eventdata, handles)
-% hObject    handle to ent_dec1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of ent_dec1 as text
-%        str2double(get(hObject,'String')) returns contents of ent_dec1 as a double
-
-
-% --- Executes during object creation, after setting all properties.
 function ent_dec1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to ent_dec1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
 
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
