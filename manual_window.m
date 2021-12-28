@@ -53,6 +53,7 @@ end
 % End initialization code - DO NOT EDIT
 
 
+
 function manual_window_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.
 % hObject    handle to figure
@@ -126,35 +127,35 @@ guidata(hObject, handles);
 
 % insert result into gui label
 shu = round(shu);
-str_shu = strcat(num2str(shu(1)), ':', num2str(shu(2)), ':', num2str(shu(3)));
+str_shu = strcat(num2str(shu(1), '%02.f'), ':', num2str(shu(2), '%02.f'), ':', num2str(shu(3), '%02.f'));
 set(handles.edi_shu, 'String', str_shu);
 
 dzu = round(dzu);
-str_dzu = strcat(num2str(dzu(1)), ':', num2str(dzu(2)), ':', num2str(dzu(3)));
+str_dzu = strcat(num2str(dzu(1), '%02.f'), ':', num2str(dzu(2), '%02.f'), ':', num2str(dzu(3), '%02.f'));
 set(handles.edi_dzu, 'String', str_dzu);
 
 ash = round(ash);
-str_ash = strcat(num2str(ash(1)), ':', num2str(ash(2)), ':', num2str(ash(3)));
+str_ash = strcat(num2str(ash(1), '%02.f'), ':', num2str(ash(2), '%02.f'), ':', num2str(ash(3), '%02.f'));
 set(handles.edi_ash, 'String', str_ash);
 
 mag = round(mag);
-str_mag= strcat(num2str(mag(1)), ':', num2str(mag(2)), ':', num2str(mag(3)));
+str_mag= strcat(num2str(mag(1), '%02.f'), ':', num2str(mag(2), '%02.f'), ':', num2str(mag(3), '%02.f'));
 set(handles.edi_mag, 'String', str_mag);
 
 isy = round(isy);
-str_isy= strcat(num2str(isy(1)), ':', num2str(isy(2)), ':', num2str(isy(3)));
+str_isy= strcat(num2str(isy(1), '%02.f'), ':', num2str(isy(2), '%02.f'), ':', num2str(isy(3), '%02.f'));
 set(handles.edi_isy, 'String', str_isy);
 
 dhu = round(dhu);
-str_dhu= strcat(num2str(dhu(1)), ':', num2str(dhu(2)), ':', num2str(dhu(3)));
+str_dhu= strcat(num2str(dhu(1), '%02.f'), ':', num2str(dhu(2), '%02.f'), ':', num2str(dhu(3), '%02.f'));
 set(handles.edi_dhu, 'String', str_dhu);
 
 ter = round(ter);
-str_ter= strcat(num2str(ter(1)), ':', num2str(ter(2)), ':', num2str(ter(3)));
+str_ter= strcat(num2str(ter(1), '%02.f'), ':', num2str(ter(2), '%02.f'), ':', num2str(ter(3), '%02.f'));
 set(handles.edi_ter, 'String', str_ter);
 
 ims = round(ims);
-str_ims= strcat(num2str(ims(1)), ':', num2str(ims(2)), ':', num2str(ims(3)));
+str_ims= strcat(num2str(ims(1), '%02.f'), ':', num2str(ims(2), '%02.f'), ':', num2str(ims(3), '%02.f'));
 set(handles.edi_ims, 'String', str_ims);
 
 
