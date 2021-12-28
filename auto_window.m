@@ -88,18 +88,110 @@ end
 
 
 % generate button function
-% TODO: simplify this callback function (separate in some functions)
 function but_gen_Callback(hObject, eventdata, handles)
 
-% get values from entry components
+% get start date and end date
 val_sta = datetime(get(handles.ent_sta, 'String'));
 val_end = datetime(get(handles.ent_end, 'String'));
 
+% get latitude
+lat1 = str2double(get(handles.lat1, 'String'));
+lat2 = str2double(get(handles.lat2, 'String'));
+lat3 = str2double(get(handles.lat3, 'String'));
+val_lat = dms2degrees([lat1 lat2 lat3]);
+
+% get longitude
+lon1 = str2double(get(handles.lon1, 'String'));
+lon2 = str2double(get(handles.lon2, 'String'));
+lon3 = str2double(get(handles.lon3, 'String'));
+val_lon = dms2degrees([lon1 lon2 lon3]);
+
+% get altitude
+val_alt = str2double(get(handles.ent_alt, 'String'));
+
+% calculate prayer times and make table from all results
+data = calculate_prayer_times(...
+    val_sta, val_end, ...
+    val_lat, ...
+    val_lon, ...
+    val_alt...
+);
+
+% handle save dialog box and get full filename
+[baseFileName, fullFileName] = make_save_dbox();
+
+% Now write the table to an Excel workbook.
+writetable(data, fullFileName);
+
+% display success
+success = ['Your ', baseFileName, ' file saved successfully!'];
+
+disp(success)
+msgbox(success, 'Information', 'help');
+
+
+% navigate to "main_window"
+function but_back_Callback(hObject, eventdata, handles)
+
+close(auto_window);
+main_window;
+
+
+% open calendar ui when "but_sta" clicked
+% TODO: overcome start date and end date conflict
+function but_sta_Callback(hObject, eventdata, handles)
+
+uicalendar('DestinationUI', {handles.ent_sta, 'String'});
+
+
+% open calendar ui when keyboard pressed in "ent_sta" entry
+function ent_sta_KeyPressFcn(hObject, eventdata, handles)
+
+uicalendar('DestinationUI', {handles.ent_sta, 'string'});
+
+
+% open calendar ui when "but_end" clicked
+function but_end_Callback(hObject, eventdata, handles)
+
+uicalendar('DestinationUI', {handles.ent_end, 'String'});
+
+
+% open calendar ui when keyboard pressed in "ent_end" entry
+function ent_end_KeyPressFcn(hObject, eventdata, handles)
+
+uicalendar('DestinationUI', {handles.ent_end, 'string'});
+
+
+% ========================================================== %
+% ==================USER DEFINED-FUNCTION=================== %
+% ========================================================== %
+function [baseFileName, fullFileName] = make_save_dbox()
+% Get the name of the file that the user wants to save.
+startingFolder = pwd; % Or "c:\" or wherever you want.
+defaultFileName = fullfile(startingFolder, '*.xlsx');
+[baseFileName, folder] = uiputfile(defaultFileName, 'Specify a file');
+
+if baseFileName == 0
+    % User clicked the Cancel button.
+    return;
+end
+
+% Get base file name, so we can ignore whatever extension they may have typed in.
+[~, baseFileNameNoExt, ext] = fileparts(baseFileName);
+fullFileName = fullfile(folder, [baseFileNameNoExt, '.xlsx']);    % Force an extension of .xlsx.
+
+
+function [data] = calculate_prayer_times(val_sta, val_end, val_lat, val_lon, val_alt)
+
+% make date sequence from val_sta til val_end
 val_dat = val_sta:val_end;
+
+% make zeros matrix for julian date, eot, and declination
 val_jul = zeros(1, length(val_dat));
 val_eot = zeros(1, length(val_dat));
 val_dec = zeros(1, length(val_dat));
 
+% make cell array for calculation result
 Fajr = cell(length(val_dat), 1);
 Dhuhr = cell(length(val_dat), 1);
 Asr = cell(length(val_dat), 1);
@@ -108,18 +200,6 @@ Isha = cell(length(val_dat), 1);
 Dhuha = cell(length(val_dat), 1);
 Sunrise = cell(length(val_dat), 1);
 Imsak = cell(length(val_dat), 1);
-
-lat1 = str2double(get(handles.lat1, 'String'));
-lat2 = str2double(get(handles.lat2, 'String'));
-lat3 = str2double(get(handles.lat3, 'String'));
-val_lat = dms2degrees([lat1 lat2 lat3]);
-
-lon1 = str2double(get(handles.lon1, 'String'));
-lon2 = str2double(get(handles.lon2, 'String'));
-lon3 = str2double(get(handles.lon3, 'String'));
-val_lon = dms2degrees([lon1 lon2 lon3]);
-
-val_alt = str2double(get(handles.ent_alt, 'String'));
 
 % calculate prayer times each day
 for i = 1:length(val_dat)
@@ -150,68 +230,12 @@ end
 
 % make date sequence from "ent_sta" entry and "ent_end" entry
 Date = datestr(reshape(val_dat, [length(val_dat), 1]));
-
-% make table from all results
 data = table(Date, Imsak, Fajr, Sunrise, Dhuha, Dhuhr, Asr, Maghrib, Isha);
 
-% Get the name of the file that the user wants to save.
-startingFolder = pwd; % Or "c:\" or wherever you want.
-defaultFileName = fullfile(startingFolder, '*.xlsx');
-[baseFileName, folder] = uiputfile(defaultFileName, 'Specify a file');
 
-if baseFileName == 0
-    % User clicked the Cancel button.
-    return;
-end
-
-% Get base file name, so we can ignore whatever extension they may have typed in.
-[~, baseFileNameNoExt, ext] = fileparts(baseFileName);
-fullFileName = fullfile(folder, [baseFileNameNoExt, '.xlsx']);    % Force an extension of .xlsx.
-
-% Now write the table to an Excel workbook.
-writetable(data, fullFileName);
-
-% display success
-success = ['Your ', baseFileName, ' file saved successfully!']
-disp(success)
-msgbox(success, 'Information', 'help');
-
-
-% navigate to "main_window"
-function but_back_Callback(hObject, eventdata, handles)
-
-close(auto_window);
-main_window;
-
-
-% open calendar ui when "but_sta" clicked
-function but_sta_Callback(hObject, eventdata, handles)
-
-uicalendar('DestinationUI', {handles.ent_sta, 'String'});
-
-
-% open calendar ui when keyboard pressed in "ent_sta" entry
-function ent_sta_KeyPressFcn(hObject, eventdata, handles)
-
-uicalendar('DestinationUI', {handles.ent_sta, 'string'});
-
-
-% open calendar ui when "but_end" clicked
-function but_end_Callback(hObject, eventdata, handles)
-
-uicalendar('DestinationUI', {handles.ent_end, 'String'});
-
-
-% open calendar ui when keyboard pressed in "ent_end" entry
-function ent_end_KeyPressFcn(hObject, eventdata, handles)
-
-uicalendar('DestinationUI', {handles.ent_end, 'string'});
-
-
-
-%                                                            %
-%                                                            %
-% ====== other functions that generated automatically ====== %
+% ========================================================== %
+% ============AUTOMATICALLY GENERATED FUNCTION============== %
+% ========================================================== %
 function ent_sta_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -280,4 +304,3 @@ function ent_end_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-% ====== end line ======
