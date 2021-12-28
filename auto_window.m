@@ -262,7 +262,8 @@ while i ~= -1
             julian_sta = juliandate(datetime(handles.ent_sta.String));
             julian_end = juliandate(datetime(handles.ent_end.String));
             if julian_sta > julian_end
-                disp('Start date and End date conflict')
+                disp('Start date and End date conflict!')
+                uiwait(msgbox('Start date and End date conflict!', 'Error', 'Error'));
                 % call function again in here coz date conflict
                 show_uicalendar(picked, handles)
             else
