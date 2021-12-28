@@ -123,19 +123,16 @@ lat = handles.lat_array(handles.pu_city.Value);
 lon = handles.lon_array(handles.pu_city.Value);
 hei = handles.hei_array(handles.pu_city.Value);
 
-% convert ent_date String to julian date
-jul = juliandate(datetime(get(handles.ent_date, 'String')));
-
-% calculate equation of time --> result will be dms format
-eot = eo_time(jul);
-
-% calculate declination
-[decDeg, decRad] = declination(jul);
-dec_dms = degrees2dms(decDeg);
-
 % lat lon into dms
 lat_dms = degrees2dms(lat);
 lon_dms = degrees2dms(lon);
+
+% convert ent_date String to julian date
+jul = juliandate(datetime(get(handles.ent_date, 'String')));
+% calculate equation of time --> result will be dms format
+eot = eo_time(jul);
+% calculate declination --> result will be dms format
+dec = declination(jul);
 
 % configure gui display
 set(handles.lat1, 'String', lat_dms(1));
@@ -152,16 +149,16 @@ set(handles.ent_eot1, 'String', eot(1));
 set(handles.ent_eot2, 'String', eot(2));
 set(handles.ent_eot3, 'String', eot(3));
 
-set(handles.ent_dec1, 'String', dec_dms(1));
-set(handles.ent_dec2, 'String', dec_dms(2));
-set(handles.ent_dec3, 'String', dec_dms(3));
+set(handles.ent_dec1, 'String', dec(1));
+set(handles.ent_dec2, 'String', dec(2));
+set(handles.ent_dec3, 'String', dec(3));
 
-% store lat, lon, eot, and dec Value to handles
+% store lat, lon, alt, eot, and dec Value to handles
 handles.lat_val = lat;
 handles.lon_val = lon;
 handles.alt_val = hei;
 handles.val_eot = dms2degrees(eot);
-handles.val_dec = decDeg;
+handles.val_dec = dms2degrees(dec);
 
 % update guidata
 guidata(hObject, handles);
@@ -188,14 +185,12 @@ main_window;
 function but_date_Callback(hObject, eventdata, handles)
 
 uicalendar('DestinationUI', {handles.ent_date, 'String'});
-disp('but_date_callback');
 
 
 % open calendar ui when keyboard pressed in "ent_date" entry
 function ent_date_KeyPressFcn(hObject, eventdata, handles)
 
 uicalendar('DestinationUI', {handles.ent_date, 'string'});
-disp('ent_date_KeyPressFcn');
 
 
 
