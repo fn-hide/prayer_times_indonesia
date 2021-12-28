@@ -16,6 +16,6 @@ decDeg = x;
 % % in radian
 % decRad = 0.0174533*x;
 
-dec = degrees2dms(decDeg)
+dec = degrees2dms(decDeg);
 end
 

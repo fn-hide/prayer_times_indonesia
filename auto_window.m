@@ -126,33 +126,36 @@ for i = 1:length(val_dat)
     % prepare date, eot, and declination for calculating prayer times
     val_jul(i) = juliandate(val_dat(i));
     
-    [minEot, secEot] = eo_time(val_jul(i));
-    eot = dms2degrees([0 minEot secEot]);
+    eot = eo_time(val_jul(i));
+    eot = dms2degrees(eot);
     val_eot(i) = eot;
     
-    [decDeg, decRad] = declination(val_jul(i));
-    val_dec(i) = decDeg;
+    dec = declination(val_jul(i));
+    dec = dms2degrees(dec);
+    val_dec(i) = dec;
     
     % calculate prayer times
     [a, b, c, d, e, f, g, h] = prayer_times_calculation(val_lat, val_lon, val_eot(i), val_dec(i), val_alt);
     
     % arrange result and pad zeros in front of the number
-    Fajr{i} = strcat(num2str(a(1) ,'%02.f'), ":", num2str(a(2) ,'%02.f'), ":", num2str(a(3) ,'%02.f'));
-    Dhuhr{i} = strcat(num2str(b(1) ,'%02.f'), ":", num2str(b(2) ,'%02.f'), ":", num2str(b(3) ,'%02.f'));
-    Asr{i} = strcat(num2str(c(1) ,'%02.f'), ":", num2str(c(2) ,'%02.f'), ":", num2str(c(3) ,'%02.f'));
-    Maghrib{i} = strcat(num2str(d(1) ,'%02.f'), ":", num2str(d(2) ,'%02.f'), ":", num2str(d(3) ,'%02.f'));
-    Isha{i} = strcat(num2str(e(1) ,'%02.f'), ":", num2str(e(2) ,'%02.f'), ":", num2str(e(3) ,'%02.f'));
-    Dhuha{i} = strcat(num2str(f(1) ,'%02.f'), ":", num2str(f(2) ,'%02.f'), ":", num2str(f(3) ,'%02.f'));
-    Sunrise{i} = strcat(num2str(g(1) ,'%02.f'), ":", num2str(g(2) ,'%02.f'), ":", num2str(g(3) ,'%02.f'));
-    Imsak{i} = strcat(num2str(h(1) ,'%02.f'), ":", num2str(h(2) ,'%02.f'), ":", num2str(h(3) ,'%02.f'));
+    Fajr{i} = concate_dms(a);
+    Dhuhr{i} = concate_dms(b);
+    Asr{i} = concate_dms(c);
+    Maghrib{i} = concate_dms(d);
+    Isha{i} = concate_dms(e);
+    Dhuha{i} = concate_dms(f);
+    Sunrise{i} = concate_dms(g);
+    Imsak{i} = concate_dms(h);
 end
 
+% make date sequence from "ent_sta" entry and "ent_end" entry
 Date = datestr(reshape(val_dat, [length(val_dat), 1]));
 
+% make table from all results
 data = table(Date, Imsak, Fajr, Sunrise, Dhuha, Dhuhr, Asr, Maghrib, Isha);
 
 % Get the name of the file that the user wants to save.
-startingFolder = pwd; % Or "c:\mydata" or wherever you want.
+startingFolder = pwd; % Or "c:\" or wherever you want.
 defaultFileName = fullfile(startingFolder, '*.xlsx');
 [baseFileName, folder] = uiputfile(defaultFileName, 'Specify a file');
 
