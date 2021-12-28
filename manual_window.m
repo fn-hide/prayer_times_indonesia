@@ -204,6 +204,9 @@ handles.val_dec = dms2degrees(dec);
 % update guidata
 guidata(hObject, handles);
 
+% TODO: optimize code that there is no handles or hObject in user-defined
+% function
+
 
 % function to show uicalendar and manage input
 function show_uicalendar(hObject, handles)

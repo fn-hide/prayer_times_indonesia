@@ -138,7 +138,6 @@ main_window;
 
 
 % open calendar ui when "but_sta" clicked
-% TODO: overcome start date and end date conflict
 function but_sta_Callback(hObject, eventdata, handles)
 
 uicalendar('DestinationUI', {handles.ent_sta, 'String'});
@@ -231,6 +230,9 @@ end
 % make date sequence from "ent_sta" entry and "ent_end" entry
 Date = datestr(reshape(val_dat, [length(val_dat), 1]));
 data = table(Date, Imsak, Fajr, Sunrise, Dhuha, Dhuhr, Asr, Maghrib, Isha);
+
+
+% TODO: function to overcome if there are conflict in date input by user
 
 
 % ========================================================== %
