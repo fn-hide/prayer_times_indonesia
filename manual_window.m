@@ -1,38 +1,11 @@
 function varargout = manual_window(varargin)
 % MANUAL_WINDOW MATLAB code for manual_window.fig
-%       ent_date, but_date
-%       pu_city, cb_city
-%       lon1, lon2, lon3
-%       lat1, lat2, lat3
-%       ent_alt
-%       ent_eot
-%       ent_dec
-%       but_cal
-%       but_back
-%      MANUAL_WINDOW, by itself, creates a new MANUAL_WINDOW or raises the existing
-%      singleton*.
-%
-%      H = MANUAL_WINDOW returns the handle to a new MANUAL_WINDOW or the handle to
-%      the existing singleton*.
-%
-%      MANUAL_WINDOW('CALLBACK',hObject,eventData,handles,...) calls the local
-%      function named CALLBACK in MANUAL_WINDOW.M with the given input arguments.
-%
-%      MANUAL_WINDOW('Property','Value',...) creates a new MANUAL_WINDOW or raises the
-%      existing singleton*.  Starting from the left, property value pairs are
-%      applied to the GUI before manual_window_OpeningFcn gets called.  An
-%      unrecognized property name or invalid value makes property application
-%      stop.  All inputs are passed to manual_window_OpeningFcn via varargin.
-%
-%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
-%      instance to run (singleton)".
-%
-% See also: GUIDE, GUIDATA, GUIHANDLES
-
-% Edit the above text to modify the response to help manual_window
-
+%       lat = latitude
+%       lon = longitude
+%       alt = altitude
+%       pu_city = city pop-up component
+%       but_cal = calculate button component
 % Last Modified by GUIDE v2.5 14-Dec-2021 12:39:30
-
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
@@ -55,34 +28,28 @@ end
 
 
 function manual_window_OpeningFcn(hObject, eventdata, handles, varargin)
-% This function has no output args, see OutputFcn.
-% hObject    handle to figure
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-% varargin   command line arguments to manual_window (see VARARGIN)
 
-% Choose default command line output for manual_window
 handles.output = hObject;
 
-% latitude longitude of 87 city
+% read csv for lat, lon, and alt of 87 city in Indonesia
 lat_lon_cit = readmatrix('latitude_longitude_city.csv', ...
     'OutputType', 'string');
 
-% array of city, latitude, and longitude
 cit_array = lat_lon_cit(:, 1);
 lat_array = str2double(lat_lon_cit(:, 2));
 lon_array = str2double(lat_lon_cit(:, 3));
 hei_array = str2double(lat_lon_cit(:, 4));
 
-% store cit, lat, and lon in handles
+% make lat, lon, and alt to be handles attributes
 handles.cit_array = cit_array;
 handles.lat_array = lat_array;
 handles.lon_array = lon_array;
 handles.hei_array = hei_array;
 
+% input cities name into pu_city
 set(handles.pu_city, 'String', handles.cit_array);
 
-% Update handles structure
+% update handles attributes
 guidata(hObject, handles);
 
 
@@ -92,10 +59,8 @@ varargout{1} = handles.output;
 
 
 function but_cal_Callback(hObject, eventdata, handles)
-% % calculate day of year
-% day_year = calculate_day_year(get(handles.ent_date, 'String'));
 
-% catch all value and store into guidata
+% get values from all entries and store its into handles guidata
 handles.val_date = get(handles.ent_date, 'String');
 
 lat1 = str2double(get(handles.lat1, 'String'));
@@ -126,36 +91,28 @@ guidata(hObject, handles);
 [shu, dzu, ash, mag, isy, dhu, ter, ims] = prayer_times_calculation(handles.val_lat, handles.val_lon, handles.val_eot, handles.val_dec, handles.val_alt);
 
 % insert result into gui label
-shu = round(shu);
-str_shu = strcat(num2str(shu(1), '%02.f'), ':', num2str(shu(2), '%02.f'), ':', num2str(shu(3), '%02.f'));
+str_shu = concate_dms(shu);
 set(handles.edi_shu, 'String', str_shu);
 
-dzu = round(dzu);
-str_dzu = strcat(num2str(dzu(1), '%02.f'), ':', num2str(dzu(2), '%02.f'), ':', num2str(dzu(3), '%02.f'));
+str_dzu = concate_dms(dzu);
 set(handles.edi_dzu, 'String', str_dzu);
 
-ash = round(ash);
-str_ash = strcat(num2str(ash(1), '%02.f'), ':', num2str(ash(2), '%02.f'), ':', num2str(ash(3), '%02.f'));
+str_ash = concate_dms(ash);
 set(handles.edi_ash, 'String', str_ash);
 
-mag = round(mag);
-str_mag= strcat(num2str(mag(1), '%02.f'), ':', num2str(mag(2), '%02.f'), ':', num2str(mag(3), '%02.f'));
+str_mag = concate_dms(mag);
 set(handles.edi_mag, 'String', str_mag);
 
-isy = round(isy);
-str_isy= strcat(num2str(isy(1), '%02.f'), ':', num2str(isy(2), '%02.f'), ':', num2str(isy(3), '%02.f'));
+str_isy = concate_dms(isy);
 set(handles.edi_isy, 'String', str_isy);
 
-dhu = round(dhu);
-str_dhu= strcat(num2str(dhu(1), '%02.f'), ':', num2str(dhu(2), '%02.f'), ':', num2str(dhu(3), '%02.f'));
+str_dhu = concate_dms(dhu);
 set(handles.edi_dhu, 'String', str_dhu);
 
-ter = round(ter);
-str_ter= strcat(num2str(ter(1), '%02.f'), ':', num2str(ter(2), '%02.f'), ':', num2str(ter(3), '%02.f'));
+str_ter = concate_dms(ter);
 set(handles.edi_ter, 'String', str_ter);
 
-ims = round(ims);
-str_ims= strcat(num2str(ims(1), '%02.f'), ':', num2str(ims(2), '%02.f'), ':', num2str(ims(3), '%02.f'));
+str_ims = concate_dms(ims);
 set(handles.edi_ims, 'String', str_ims);
 
 
