@@ -140,25 +140,26 @@ main_window;
 % open calendar ui when "but_sta" clicked
 function but_sta_Callback(hObject, eventdata, handles)
 
-uicalendar('DestinationUI', {handles.ent_sta, 'String'});
+show_uicalendar('start', handles);
 
 
 % open calendar ui when keyboard pressed in "ent_sta" entry
 function ent_sta_KeyPressFcn(hObject, eventdata, handles)
 
-uicalendar('DestinationUI', {handles.ent_sta, 'string'});
+show_uicalendar('start', handles);
 
 
 % open calendar ui when "but_end" clicked
 function but_end_Callback(hObject, eventdata, handles)
 
-uicalendar('DestinationUI', {handles.ent_end, 'String'});
+show_uicalendar('end', handles);
 
 
 % open calendar ui when keyboard pressed in "ent_end" entry
 function ent_end_KeyPressFcn(hObject, eventdata, handles)
 
-uicalendar('DestinationUI', {handles.ent_end, 'string'});
+show_uicalendar('end', handles);
+
 
 
 % ========================================================== %
@@ -232,7 +233,50 @@ Date = datestr(reshape(val_dat, [length(val_dat), 1]));
 data = table(Date, Imsak, Fajr, Sunrise, Dhuha, Dhuhr, Asr, Maghrib, Isha);
 
 
-% TODO: function to overcome if there are conflict in date input by user
+% function to overcome if there are conflict in date input by user
+function show_uicalendar(picked, handles)
+
+if strcmp(picked, 'start') == 1
+    picked_date = handles.ent_sta;
+    another_date = handles.ent_end;
+else
+    picked_date = handles.ent_end;
+    another_date = handles.ent_sta;
+end
+
+picked_old = picked_date.String;
+
+uicalendar('DestinationUI', {picked_date, 'String'});
+
+disp('')
+disp('Pick your date!')
+i = 0;
+while i ~= -1
+    picked_new = picked_date.String;
+    if strcmp(picked_old, picked_new) == 1
+        i = i + 1;
+        disp(['waiting time: ', num2str(i), 's'])
+        pause(1)
+    else
+        if length(another_date.String) > 5
+            julian_sta = juliandate(datetime(handles.ent_sta.String));
+            julian_end = juliandate(datetime(handles.ent_end.String));
+            if julian_sta > julian_end
+                disp('Start date and End date conflict')
+                % call function again in here coz date conflict
+                show_uicalendar(picked, handles)
+            else
+                disp('date picked')
+            end
+        else
+            disp('date picked')
+        end
+        i = -1;
+    end
+end
+
+
+
 
 
 % ========================================================== %

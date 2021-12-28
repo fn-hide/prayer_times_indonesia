@@ -204,12 +204,10 @@ handles.val_dec = dms2degrees(dec);
 % update guidata
 guidata(hObject, handles);
 
-% TODO: optimize code that there is no handles or hObject in user-defined
-% function
-
 
 % function to show uicalendar and manage input
 function show_uicalendar(hObject, handles)
+
 date_old = get(handles.ent_date, 'String');
 
 uicalendar('DestinationUI', {handles.ent_date, 'String'});
@@ -224,6 +222,7 @@ while i ~= -1
         disp(['waiting time: ', num2str(i), 's'])
         pause(1)
     else
+        % hObject
         get_eot_and_declination(hObject, handles)
         i = -1;
     end
