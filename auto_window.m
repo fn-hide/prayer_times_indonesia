@@ -244,39 +244,21 @@ else
     another_date = handles.ent_sta;
 end
 
-picked_old = picked_date.String;
-
-uicalendar('DestinationUI', {picked_date, 'String'});
-
-disp('')
-disp('Pick your date!')
-i = 0;
-while i ~= -1
-    picked_new = picked_date.String;
-    if strcmp(picked_old, picked_new) == 1
-        i = i + 1;
-        disp(['waiting time: ', num2str(i), 's'])
-        pause(1)
+uiwait(uicalendar('DestinationUI', {picked_date, 'String'}));
+if length(another_date.String) > 5      % check is another ent_date filled in or not
+    julian_sta = juliandate(datetime(handles.ent_sta.String));
+    julian_end = juliandate(datetime(handles.ent_end.String));
+    if julian_sta > julian_end
+        disp('Start date and End date conflict!')
+        uiwait(msgbox('Start date and End date conflict!', 'Error', 'Error'));
+        % call function again in here coz date conflict
+        show_uicalendar(picked, handles)
     else
-        if length(another_date.String) > 5
-            julian_sta = juliandate(datetime(handles.ent_sta.String));
-            julian_end = juliandate(datetime(handles.ent_end.String));
-            if julian_sta > julian_end
-                disp('Start date and End date conflict!')
-                uiwait(msgbox('Start date and End date conflict!', 'Error', 'Error'));
-                % call function again in here coz date conflict
-                show_uicalendar(picked, handles)
-            else
-                disp('date picked')
-            end
-        else
-            disp('date picked')
-        end
-        i = -1;
+        disp('date picked2')
     end
+else
+    disp('date picked1')
 end
-
-
 
 
 

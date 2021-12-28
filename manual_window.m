@@ -181,7 +181,10 @@ show_uicalendar(hObject, handles)
 % ==================USER DEFINED-FUNCTION=================== %
 % ========================================================== %
 % calculate eot and declination from chosen date
-function get_eot_and_declination(hObject, handles)
+% function to show uicalendar and manage input
+function show_uicalendar(hObject, handles)
+
+uiwait(uicalendar('DestinationUI', {handles.ent_date, 'String'}));
 
 % convert ent_date String to julian date
 jul = juliandate(datetime(get(handles.ent_date, 'String')));
@@ -205,30 +208,7 @@ handles.val_dec = dms2degrees(dec);
 guidata(hObject, handles);
 
 
-% function to show uicalendar and manage input
-function show_uicalendar(hObject, handles)
-
-date_old = get(handles.ent_date, 'String');
-
-uicalendar('DestinationUI', {handles.ent_date, 'String'});
-
-disp('')
-disp('Pick your date!')
-i = 0;
-while i ~= -1
-    date_new = get(handles.ent_date, 'String');
-    if strcmp(date_old, date_new) == 1
-        i = i + 1;
-        disp(['waiting time: ', num2str(i), 's'])
-        pause(1)
-    else
-        % hObject
-        get_eot_and_declination(hObject, handles)
-        i = -1;
-    end
-end
-
-
+        
 % ========================================================== %
 % ============AUTOMATICALLY GENERATED FUNCTION============== %
 % ========================================================== %
