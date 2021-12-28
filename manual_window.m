@@ -127,13 +127,6 @@ hei = handles.hei_array(handles.pu_city.Value);
 lat_dms = degrees2dms(lat);
 lon_dms = degrees2dms(lon);
 
-% convert ent_date String to julian date
-jul = juliandate(datetime(get(handles.ent_date, 'String')));
-% calculate equation of time --> result will be dms format
-eot = eo_time(jul);
-% calculate declination --> result will be dms format
-dec = declination(jul);
-
 % configure gui display
 set(handles.lat1, 'String', lat_dms(1));
 set(handles.lat2, 'String', lat_dms(2));
@@ -145,20 +138,10 @@ set(handles.lon3, 'String', lon_dms(3));
 
 set(handles.ent_alt, 'String', hei);
 
-set(handles.ent_eot1, 'String', eot(1));
-set(handles.ent_eot2, 'String', eot(2));
-set(handles.ent_eot3, 'String', eot(3));
-
-set(handles.ent_dec1, 'String', dec(1));
-set(handles.ent_dec2, 'String', dec(2));
-set(handles.ent_dec3, 'String', dec(3));
-
 % store lat, lon, alt, eot, and dec Value to handles
 handles.lat_val = lat;
 handles.lon_val = lon;
 handles.alt_val = hei;
-handles.val_eot = dms2degrees(eot);
-handles.val_dec = dms2degrees(dec);
 
 % update guidata
 guidata(hObject, handles);
@@ -184,19 +167,69 @@ main_window;
 % open calendar ui when "but_date" clicked
 function but_date_Callback(hObject, eventdata, handles)
 
-uicalendar('DestinationUI', {handles.ent_date, 'String'});
+show_uicalendar(hObject, handles)
 
 
 % open calendar ui when keyboard pressed in "ent_date" entry
 function ent_date_KeyPressFcn(hObject, eventdata, handles)
 
-uicalendar('DestinationUI', {handles.ent_date, 'string'});
+show_uicalendar(hObject, handles)
 
 
 
-%                                                            %
-%                                                            %
-% ====== other functions that generated automatically ====== %
+% ========================================================== %
+% ==================USER DEFINED-FUNCTION=================== %
+% ========================================================== %
+% calculate eot and declination from chosen date
+function get_eot_and_declination(hObject, handles)
+
+% convert ent_date String to julian date
+jul = juliandate(datetime(get(handles.ent_date, 'String')));
+% calculate equation of time --> result will be dms format
+eot = eo_time(jul);
+% calculate declination --> result will be a dms format
+dec = declination(jul);
+
+set(handles.ent_eot1, 'String', eot(1));
+set(handles.ent_eot2, 'String', eot(2));
+set(handles.ent_eot3, 'String', eot(3));
+
+set(handles.ent_dec1, 'String', dec(1));
+set(handles.ent_dec2, 'String', dec(2));
+set(handles.ent_dec3, 'String', dec(3));
+
+handles.val_eot = dms2degrees(eot);
+handles.val_dec = dms2degrees(dec);
+
+% update guidata
+guidata(hObject, handles);
+
+
+% function to show uicalendar and manage input
+function show_uicalendar(hObject, handles)
+date_old = get(handles.ent_date, 'String');
+
+uicalendar('DestinationUI', {handles.ent_date, 'String'});
+
+disp('')
+disp('Pick your date!')
+i = 0;
+while i ~= -1
+    date_new = get(handles.ent_date, 'String');
+    if strcmp(date_old, date_new) == 1
+        i = i + 1;
+        disp(['waiting time: ', num2str(i), 's'])
+        pause(1)
+    else
+        get_eot_and_declination(hObject, handles)
+        i = -1;
+    end
+end
+
+
+% ========================================================== %
+% ============AUTOMATICALLY GENERATED FUNCTION============== %
+% ========================================================== %
 function ent_eot_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -335,4 +368,3 @@ function ent_dec1_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-% ====== end line ======
