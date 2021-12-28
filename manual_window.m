@@ -117,12 +117,8 @@ set(handles.edi_ims, 'String', str_ims);
 
 
 function pu_city_Callback(hObject, eventdata, handles)
-% set latitude and longitude entry to chosen city pop-up menu
-% indexing: pick long and lat from csv data with given index value
 
-% cit = handles.cit_array(handles.pu_city.Value);
-
-% get lat and lon index and catch the value
+% set lat, lon, and alt entries to chosen city from pu_city
 lat = handles.lat_array(handles.pu_city.Value);
 lon = handles.lon_array(handles.pu_city.Value);
 hei = handles.hei_array(handles.pu_city.Value);
@@ -130,9 +126,8 @@ hei = handles.hei_array(handles.pu_city.Value);
 % convert ent_date String to julian date
 jul = juliandate(datetime(get(handles.ent_date, 'String')));
 
-% calculate equation of time
-[minEot, secEot] = eo_time(jul);
-eot = dms2degrees([0 minEot secEot]);
+% calculate equation of time --> result will be dms format
+eot = eo_time(jul);
 
 % calculate declination
 [decDeg, decRad] = declination(jul);
@@ -153,9 +148,9 @@ set(handles.lon3, 'String', lon_dms(3));
 
 set(handles.ent_alt, 'String', hei);
 
-set(handles.ent_eot1, 'String', 0);
-set(handles.ent_eot2, 'String', minEot);
-set(handles.ent_eot3, 'String', secEot);
+set(handles.ent_eot1, 'String', eot(1));
+set(handles.ent_eot2, 'String', eot(2));
+set(handles.ent_eot3, 'String', eot(3));
 
 set(handles.ent_dec1, 'String', dec_dms(1));
 set(handles.ent_dec2, 'String', dec_dms(2));
@@ -165,7 +160,7 @@ set(handles.ent_dec3, 'String', dec_dms(3));
 handles.lat_val = lat;
 handles.lon_val = lon;
 handles.alt_val = hei;
-handles.val_eot = eot;
+handles.val_eot = dms2degrees(eot);
 handles.val_dec = decDeg;
 
 % update guidata

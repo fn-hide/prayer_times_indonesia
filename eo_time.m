@@ -1,4 +1,4 @@
-function [minEot, secEot] = eo_time(julianDate)
+function [eot] = eo_time(julianDate)
 %Calculate equation of time
 %   julianDate  : input must be a julian date format
 %   minEot      : minutes of eot result
@@ -20,5 +20,7 @@ if secEot > 0
 else 
     secEot = secEot*-1;
 end
+
+eot = [0 minEot secEot];
 end
 
