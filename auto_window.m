@@ -1,6 +1,6 @@
 function varargout = auto_window(varargin)
 % AUTO_WINDOW MATLAB code for auto_window.fig
-% Last Modified by GUIDE v2.5 14-Dec-2021 13:30:10
+% Last Modified by GUIDE v2.5 03-Jan-2022 14:57:10
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
