@@ -8,4 +8,7 @@ The Mathematics Departement of Islamic State University of Sunan Ampel
 - Machine Learning Toolbox
 - Optimization Toolbox
 
-###### Has been built using MATLAB 2020a
+##### Has been built using MATLAB 2020a
+###### TODO: Add reset buttons
+###### TODO: Review error handling
+###### TODO: Homogenization
